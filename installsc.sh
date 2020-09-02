@@ -6,7 +6,7 @@ echo --------------------------
 sudo apt install shairport-sync -y
 echo Installing whiptail
 echo --------------------------
-sudo apt install shairport-sync -y
+sudo apt install whiptail -y
 echo Copying Files...
 sudo cp ./menu.sh ~/musicmenu.sh
 echo ------------------------------

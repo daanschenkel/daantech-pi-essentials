@@ -1,35 +1,52 @@
+#!/bin/bash
 clear
-RETVAL=$(whiptail --title "DaanTech PIMusic" \
---menu --nocancel "PiMusic" 10 50 4 \
-"a" "Start all" \
-"b" "Start Spotify connect" \
-"c" "Start Airplay" \
-"d" "Stop all" \
-"e" "Quit"
-3>&1 1>&2 2>&3)
+HEIGHT=20
+WIDTH=40
+CHOICE_HEIGHT=20
+BACKTITLE="RaspberryPiEssentials"
+TITLE="RPIEssentials"
+MENU="Choose option"
 
-# Below you can enter the corresponding commands
+OPTIONS=(1 "Start all"
+         2 "Start spotify"
+	 3 "Start airplay"
+	 4 "Stop all"
+         5 "Exit")
 
-case $RETVAL in
-    a) echo "Please wait" 
-       sudo systemctl start raspotify
-       sudo systemctl start shairport-sync
-	./musicmenu.sh
-	;;
-    b) echo "Please wait"
-       sudo systemctl start raspotify
-	./musicmenu.sh
-	;;
-    c) echo "Please wait"
-	sudo systemctl start shairport-sync  
-	./musicmenu.sh     
-	;;
-    d) echo "Please wait"
-	sudo systemctl stop shairport-sync
-	sudo systemctl stop raspotify
-	./musicmenu.sh
-    e) echo "Please wait"
-	exit
-    *) echo "Invalid option. Quitting";;
+CHOICE=$(dialog --clear \
+                --no-cancel\
+                --backtitle "$BACKTITLE" \
+                --title "$TITLE" \
+                --menu "$MENU" \
+                $HEIGHT $WIDTH $CHOICE_HEIGHT \
+                "${OPTIONS[@]}" \
+                2>&1 >/dev/tty)
+
+case $CHOICE in
+        1)
+            echo "Starting all..."
+	   dialog --infobox "Please wait" 10 20
+	    sudo systemctl start raspotify
+            sudo systemctl start shairport-sync
+            ;;
+        2)
+            echo "Starting spotify..."
+             dialog --infobox "Please wait" 10 20
+	    sudo systemctl start raspotify
+            ;;
+        3)
+            echo "Starting airplay..."
+	    dialog --infobox "Please wait" 10 20
+	    sudo systemctl start shairport-sync
+            ;;
+	4)
+	   echo "Stopping all..."
+	   dialog --infobox "Please wait" 10 20
+	   sudo systemctl stop raspotify
+           sudo systemctl stop shairport-sync
+           ;; 
+	5)
+	   echo "Quitting..."
+           exit;;
 esac
-
+./musicmenu.sh
