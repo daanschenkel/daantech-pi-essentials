@@ -6,4 +6,8 @@ echo Installing Shairport-sync
 echo --------------------------
 sudo apt install shairport-sync -y
 echo ------------------------------
-echo Done installing dependencies! click ok to continue
+echo Done installing dependencies
+echo ---------------------------
+echo Copying files
+echo ----------------------------
+sudo cp menu.sh ~/musicmenu.sh
