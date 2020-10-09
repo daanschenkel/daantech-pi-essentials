@@ -1,6 +1,6 @@
 echo Installing Raspotify
 echo --------------------------
-sudo apt install raspotify -y
+curl -sL https://dtcooper.github.io/raspotify/install.sh | sh
 echo --------------------------
 echo Installing Shairport-sync
 echo --------------------------
